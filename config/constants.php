@@ -4,14 +4,14 @@
 return [
 
     'developer' => [
-        'name' => 'Mass Group',
-        'url'=>'https://massgroupbd.com'
+        'name' => 'Ali Akbar',
+        'url'=>'https://shikkhaghorbd.com'
     ],
     'development'=> [
         'session'=> date("Y")
     ],
     'software' => [
-        'name' => 'Finlay Properties Ltd'
+        'name' => 'Shikkhaghor Bangladesh'
     ],
     
 
