@@ -114,7 +114,15 @@
                                 <div class="col-md-3">
                                     <label>Status</label>
                                     <label><input type="radio"  name="news_status" value="1" @if($news->news_status==1)checked @endif> Published </label>
-                                    <label><input type="radio"  name="news_status" value="2" @if($news->news_status==3)checked @endif> Draft</label>
+                                    <label><input type="radio"  name="news_status" value="2" @if($news->news_status==2)checked @endif> Draft</label>
+                                </div>
+                            </div>
+
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="meta">Meta</label>
+                                    <textarea name="meta" class="form-control" id="meta">{{ $news->meta }}</textarea>
                                 </div>
                             </div>
 

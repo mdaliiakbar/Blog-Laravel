@@ -71,6 +71,13 @@
                                         <label><input type="radio"  name="status" value="2" checked> Draft</label>
                                     </div>
                                 </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="meta">Meta</label>
+                                        <textarea name="meta" class="form-control" id="meta"></textarea>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-12">

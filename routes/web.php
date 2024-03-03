@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', "App\\Http\\Controllers\\Backend\\DashboardController@index")->name("dashboard");
     Route::post('/logout', "App\\Http\\Controllers\\Auth\\LoginController@logout")->name("logout");
 
-    Route::get('/news', "App\\Http\\Controllers\\Backend\\NewsController@index")->name("news");
+    Route::get('/all-news', "App\\Http\\Controllers\\Backend\\NewsController@index")->name("news");
     Route::get('/add-news', "App\\Http\\Controllers\\Backend\\NewsController@add")->name("add-news");
     Route::post('/add-news', "App\\Http\\Controllers\\Backend\\NewsController@save")->name("add-news");
     Route::post('/news_list', "App\\Http\\Controllers\\Backend\\NewsController@news")->name("news_list");

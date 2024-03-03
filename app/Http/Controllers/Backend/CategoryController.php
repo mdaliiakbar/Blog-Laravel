@@ -9,15 +9,6 @@ use DB;
 
 class CategoryController extends Controller
 {
-    public $source;
-    public $destination_resize_path;
-    public $destination_origin_path;
-    public $keep_origin = true;
-    public $width = 350;
-    public $height = null;
-    public $isWatermark = false;
-    public $watermarkSource;
-
     public function index(){
         return view("app.category.index");
     }
@@ -111,6 +102,7 @@ class CategoryController extends Controller
             $cat = Categories::create([
                 "title"=>$request->title,
                 "details"=>$request->body,
+                "meta"=>$request->meta,
                 "status"=>$request->news_status
             ]);
         } else {
@@ -118,6 +110,7 @@ class CategoryController extends Controller
             $cat->title = $request->title;
             $cat->details = $request->body;
             $cat->status = $request->status;
+            $cat->meta = $request->meta;
             $cat->save();
         }
 

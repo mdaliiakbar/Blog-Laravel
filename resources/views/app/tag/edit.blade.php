@@ -53,22 +53,29 @@
                         @endif
                         <form method="post" class="parsley-examples" action="{{ route("add-tag") }}"  enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" value="{{ $cat->id }}" name="id"/>
+                            <input type="hidden" value="{{ $tag->id }}" name="id"/>
                             <input type="hidden" value="2" name="save"/>
 
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="title">Title <span class="text-danger">*</span></label>
-                                        <input type="text" required name="title" class="form-control" value="{{ $cat->title }}" id="title" autocomplete="off">
+                                        <input type="text" required name="title" class="form-control" value="{{ $tag->title }}" id="title" autocomplete="off">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Status</label>
-                                        <label><input type="radio"  name="status" value="1" @if($cat->status==1)checked @endif> Published </label>
-                                        <label><input type="radio"  name="status" value="2" @if($cat->status==2)checked @endif> Draft</label>
+                                        <label><input type="radio"  name="status" value="1" @if($tag->status==1)checked @endif> Published </label>
+                                        <label><input type="radio"  name="status" value="2" @if($tag->status==2)checked @endif> Draft</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="meta">Meta</label>
+                                        <textarea name="meta" class="form-control" id="meta">{{ $tag->meta }}</textarea>
                                     </div>
                                 </div>
 

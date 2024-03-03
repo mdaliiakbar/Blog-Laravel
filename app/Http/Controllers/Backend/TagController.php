@@ -97,18 +97,20 @@ class TagController extends Controller
         ]);
 
         if($request->save==1){
-            $cat = Tags::create([
+            $tag = Tags::create([
                 "title"=>$request->title,
-                "status"=>$request->status
+                "status"=>$request->status,
+                "meta"=>$request->meta
             ]);
         } else {
-            $cat = Tags::find($request->id);
-            $cat->title = $request->title;
-            $cat->status = $request->status;
-            $cat->save();
+            $tag = Tags::find($request->id);
+            $tag->title = $request->title;
+            $tag->status = $request->status;
+            $tag->meta = $request->meta;
+            $tag->save();
         }
 
-        if($cat) {
+        if($tag) {
             return back()->with(["msg"=>"Successfully saved."]);
         } else {
             return back()->withErrors(["msg"=>"Failed to save! Please try again."]);
@@ -117,8 +119,8 @@ class TagController extends Controller
 
     public function edit($id)
     {
-        $cat = Tags::find($id);
-        return view("app.tag.edit", compact('cat'));
+        $tag = Tags::find($id);
+        return view("app.tag.edit", compact('tag'));
     }
 
     public function delete(Request $request)

@@ -28,6 +28,7 @@
 
 		function studentList(){
 			var filterData  = {
+				filter_category   : $("#filter_category").val(),
 				filter_status   : $("#filter_status").val(),
 				filter_type   	: $("#filter_type").val()
 			};
@@ -44,10 +45,10 @@
 				"scrollCollapse": true,
 				"columnDefs": [
 					{
-						"targets": [4,5,6],
+						"targets": [5],
 						"orderable": false
 					}, {
-						"targets": [0, 1,3,4,5,6],
+						"targets": [0,3,4,5],
 						className: "text-center"
 					}],
 				"ajax": {
@@ -114,6 +115,16 @@
 							<div class="row">
 
 								<div class="col-md-2">
+									<label for="filter_category">Category</label>
+									<select class="form-control"  data-toggle="select2" id="filter_category" onchange="studentList()">
+										<option value="">All</option>
+										@foreach ($categories as $item)
+											<option value="{{ $item->id }}">{{ $item->title}}</option>
+										@endforeach
+									</select>
+								</div>
+
+								<div class="col-md-2">
 									<label for="filter_group">News Status</label>
 									<select class="form-control"  data-toggle="select2" id="filter_status" onchange="studentList()">
 										<option value="">All</option>
@@ -145,7 +156,6 @@
 								<th>Title</th>
 								<th>Category</th>
 								<th>Date</th>
-								<th>Type</th>
 								<th>Status</th>
 								<th class="text-center">Action</th>
 							</tr>

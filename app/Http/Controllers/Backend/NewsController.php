@@ -12,7 +12,8 @@ use Image;
 class NewsController extends Controller
 {
     public function index(){
-        return view("app.news.index");
+        $categories = Categories::all();
+        return view("app.news.index",compact("categories"));
     }
 
     public function add(){
@@ -27,11 +28,13 @@ class NewsController extends Controller
             0 => 'id',
             1 => 'title',
             2 => 'category_id',
-            3 => 'news_date'
+            3 => 'news_date',
+            4 => 'news_status'
         );
 
         $filter_status = $request->input('search.filter_status');
         $filter_type = $request->input('search.filter_type');
+        $filter_category = $request->input('search.filter_category');
 
         $where =array();
 
@@ -40,6 +43,9 @@ class NewsController extends Controller
         }
         if($filter_type){
             $where = array_merge($where,["news_type"=>$filter_type]);
+        }        
+        if($filter_category){
+            $where = array_merge($where,["category_id"=>$filter_category]);
         }
         $totalData = News::query()->where($where)->count();
 
@@ -86,7 +92,7 @@ class NewsController extends Controller
                 $nestedData[] = $post->title;
                 $nestedData[] = $post->category->title;
                 $nestedData[] = $post->news_date;
-                $nestedData[] = $post->news_type==1?"News":"Events";
+                // $nestedData[] = $post->news_type==1?"News":"Events";
                 $nestedData[] = $post->news_status==2?"Draft":"Published";
                 $nestedData[] =
                     '<form style="display:inline;" action="'.(route("news-del")).'" method="post" onsubmit="return confirm_delete()">
@@ -154,6 +160,7 @@ class NewsController extends Controller
                 "news_date"=>$request->news_date,
                 "category_id"=>$request->category_id,
                 "news_status"=>$request->news_status,
+                "meta"=>$request->meta,
                 "tag_id"=>$request->tag ? implode(",",$request->tag):'',
                 "created_by"=>auth()->user()->id,
                 "picture"=> implode(",",$picture),
@@ -166,6 +173,7 @@ class NewsController extends Controller
             $news->category_id = $request->category_id;
             $news->news_type = $request->news_type;
             $news->news_date = $request->news_date;
+            $news->meta = $request->meta;
             $news->news_status = $request->news_status;
             $news->tag_id = $request->tag ? implode(",",$request->tag):'';
             $news->updated_by = auth()->user()->id;

@@ -71,11 +71,20 @@
                                     </div>
                                 </div>
 
+
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Status</label>
                                         <label><input type="radio"  name="status" value="1" @if($cat->status==1)checked @endif> Published </label>
                                         <label><input type="radio"  name="status" value="2" @if($cat->status==2)checked @endif> Draft</label>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="meta">Meta</label>
+                                        <textarea name="meta" class="form-control" id="meta">{{ $cat->meta }}</textarea>
                                     </div>
                                 </div>
 
