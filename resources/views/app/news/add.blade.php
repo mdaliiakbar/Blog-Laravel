@@ -85,7 +85,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="picture">Picture <span class="text-danger">*</span></label>
-                                    <input type="file"  name="picture" id="picture">
+                                    <input type="file"  name="picture[]" id="picture">
                                 </div>
                             </div>
 

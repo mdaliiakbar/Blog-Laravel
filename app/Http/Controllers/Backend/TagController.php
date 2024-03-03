@@ -34,9 +34,10 @@ class TagController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $posts = DB::table(DB::raw("news,tags"))
+            $posts = DB::table(DB::raw("tags"))
+            //$posts = DB::table(DB::raw("news,tags"))
                 ->select(DB::raw("tags.*, count(tags.id) as total"))
-                ->whereRaw('FIND_IN_SET(tags.id, news.tag_id)')
+                //->whereRaw('FIND_IN_SET(tags.id, news.tag_id)')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -44,9 +45,10 @@ class TagController extends Controller
                 ->get();
         } else {
             $search = $request->input('search.value');
-            $posts =  DB::table(DB::raw("news,tags"))
+            //$posts =  DB::table(DB::raw("news,tags"))
+            $posts =  DB::table(DB::raw("tags"))
                 ->select(DB::raw("tags.*, count(tags.id) as total"))
-                ->whereRaw('FIND_IN_SET(tags.id, news.tag_id)')
+               // ->whereRaw('FIND_IN_SET(tags.id, news.tag_id)')
                 ->where('tags.title', 'like', "%{$search}%");
             $posts = $posts
                 ->offset($start)

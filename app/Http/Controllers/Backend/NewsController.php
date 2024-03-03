@@ -11,15 +11,6 @@ use Image;
 
 class NewsController extends Controller
 {
-    public $source;
-    public $destination_resize_path;
-    public $destination_origin_path;
-    public $keep_origin = true;
-    public $width = 350;
-    public $height = null;
-    public $isWatermark = false;
-    public $watermarkSource;
-
     public function index(){
         return view("app.news.index");
     }
@@ -142,7 +133,7 @@ class NewsController extends Controller
                 $img = Image::make($image);
                 $img->save(public_path($folder2).$image->getClientOriginalName());
                 $picture[]=$folder2.$image->getClientOriginalName();
-                $img->resize(300, 300, function ($constraint) {
+                $img->resize(null, 300, function ($constraint) {
                     $constraint->aspectRatio();
                 });
                 $fileName = explode('.',$image->getClientOriginalName())[0];
@@ -153,8 +144,6 @@ class NewsController extends Controller
                 $imageUrl = $directory.$newFileName;
                 $img->save($imageUrl);
             }
-
-
         }
 
         if($request->save==1){
@@ -167,8 +156,8 @@ class NewsController extends Controller
                 "news_status"=>$request->news_status,
                 "tag_id"=>$request->tag ? implode(",",$request->tag):'',
                 "created_by"=>auth()->user()->id,
-                "picture"=>implode(",",$picture),
-                "thumbnail"=>implode(",",$thumbnail)
+                "picture"=> implode(",",$picture),
+                "thumbnail"=> implode(",",$thumbnail)
             ]);
         } else {
             $news = News::find($request->id);

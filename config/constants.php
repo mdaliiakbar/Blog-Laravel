@@ -4,14 +4,14 @@
 return [
 
     'developer' => [
-        'name' => 'Ali Akbar',
-        'url'=>'https://shikkhaghorbd.com'
+        'name' => 'Blog',
+        'url'=>'/'
     ],
     'development'=> [
         'session'=> date("Y")
     ],
     'software' => [
-        'name' => 'Shikkhaghor Bangladesh'
+        'name' => 'Blog'
     ],
     
 

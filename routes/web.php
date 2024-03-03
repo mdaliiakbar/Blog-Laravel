@@ -5,8 +5,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', "App\\Http\\Controllers\\Auth\\LoginController@index")->name('login');
 Route::post('/login', "App\\Http\\Controllers\\Auth\\LoginController@authenticate")->name('login');
 
+
+Route::get('/', "App\\Http\\Controllers\\News\\HomeController@index")->name('home');
+
+
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', "App\\Http\\Controllers\\Backend\\DashboardController@index")->name("dashboard");
+    // Route::get('/', "App\\Http\\Controllers\\Backend\\DashboardController@index")->name("dashboard");
     Route::get('/dashboard', "App\\Http\\Controllers\\Backend\\DashboardController@index")->name("dashboard");
     Route::post('/logout', "App\\Http\\Controllers\\Auth\\LoginController@logout")->name("logout");
 
