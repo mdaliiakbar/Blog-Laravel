@@ -2,16 +2,46 @@
 @section('title','Update News & Events')
 
 @section("script")
-    <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+    <script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
 
     <!-- validation init -->
-    <script src="assets/js/pages/form-validation.init.js"></script>
+    <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
+
+    <script src="{{ asset('assets/js/pages/spartan-multi-image-picker.js')}}"></script>
     <script>
+         var count = 0;
           var id;
+          var sl="{{ $news->picture }}";
+          sl= sl.split(",");
+          sl=sl.length;
+          var trashImg=[],  trashThum=[];
+          var newAdd=-1;
         $(document).ready(function(){
-
-
+            count = sl+1; 
+            $("#demo").spartanMultiImagePicker({
+                fieldName:  'picture[]',
+                //dropFileLabel:   'Drop file here',
+                allowedExt:'png|jpg|jpeg|gif|webp',
+                onAddRow: function() {
+                    newAdd++;
+                 $("#imageNewAdd").val(newAdd);
+                },
+                onRemoveRow: function() {
+                    if(newAdd>0){
+                        newAdd--;
+                        $("#imageNewAdd").val(newAdd);
+                    }                    
+                },
+            });
         });
+
+        function deleteFIle(img,thum){
+            trashImg.push(img);
+            trashThum.push(thum);
+            $("#trashImg").val(trashImg.join(","));
+            $("#trashThum").val(trashThum.join(","));
+        }
+
     </script>
 @endsection
 @section('content')
@@ -55,6 +85,9 @@
                             @csrf
                             <input type="hidden" value="{{ $news->id }}" name="id"/>
                             <input type="hidden" value="2" name="save"/>
+                            <input type="hidden"  name="trashImg" id="trashImg"/>
+                            <input type="hidden"  name="trashThum" id="trashThum"/>
+                            <input type="hidden"  name="imageNewAdd" id="imageNewAdd" value="2"/>
                             <div class="row">
 
                                 <div class="col-md-6">
@@ -79,20 +112,6 @@
                                 <div class="col-md-12">
                                     <label for="body">Description <span class="text-danger">*</span></label>
                                     <textarea name="body" parsley-trigger="change" class="form-control" id="body">{{ $news->body }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="picture">Picture <span class="text-danger">*</span></label>
-                                    @if($news->thumbnail)
-                                    @if(file_exists(public_path($news->thumbnail)))
-                                    <div>
-                                        <img src="{{ $news->thumbnail }}">
-                                    </div>
-                                    @endif
-                                    @endif
-                                    <input type="file"  name="picture[]" id="picture" multiple>
                                 </div>
                             </div>
 
@@ -125,6 +144,50 @@
                                     <textarea name="meta" class="form-control" id="meta">{{ $news->meta }}</textarea>
                                 </div>
                             </div>
+
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="picture">Picture (png/jpg/jpeg/gif/webp) <span class="text-danger">*</span></label>
+                                    <div id="demo" class="row">
+                                        @if($news->picture)
+                                        @foreach (explode(",",$news->picture) as $key=>$item)
+                                        <div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="{{ $key+1}}" style="margin-bottom : 20px; ">
+                                            <div style="position: relative;">
+                                                <div class="spartan_item_loader" data-spartanindexloader="{{ $key+1}}" style=" position: absolute; width: 100%; height: 200px; background: rgba(255,255,255, 0.7); z-index: 22; text-align: center; align-items: center; margin: auto; justify-content: center; flex-direction: column; display : none; font-size : 1.7em; color: #CECECE">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                                    </svg>
+                                                </div>
+                                                <label class="file_upload" style="width: 100%; height: 200px; border: 2px dashed #ddd; border-radius: 3px; cursor: pointer; text-align: center; overflow: hidden; padding: 5px; margin-top: 5px; margin-bottom : 5px; position : relative; display: flex; align-items: center; margin: auto; justify-content: center; flex-direction: column;">
+                                                    <a href="javascript:void(0)" onclick="deleteFIle('{{ $item }}','{{ explode(',', $news->thumbnail)[$key] }}')" data-spartanindexremove="{{ $key+1}}" style="position: absolute !important; right : 3px; top: 3px; display : block; background : #ED3C20; border-radius: 3px; width: 30px; height: 30px; line-height : 30px; text-align: center; text-decoration : none; color : #FFF;" class="spartan_remove_row">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </a>
+                                                    <img style="width: 100%; margin: 0 auto; vertical-align: middle;" data-spartanindexi="{{ $key+1}}" src="{{ asset($item) }}" class="spartan_image_placeholder" /> 
+                                                    <p data-spartanlbldropfile="{{ $key+1}}" style="color : #5FAAE1; display: none; width : auto; ">Drop file here</p>
+                                                    <img style="width: 100%; vertical-align: middle; display:none;" class="img_" data-spartanindeximage="{{ $key+1}}">
+                                                    <input class="form-control spartan_image_input" accept="image/*" data-spartanindexinput="{{ $key+1}}" style="display : none"  name="picture[]" type="file">
+                                               </label> 
+                                            </div>
+                                       </div>
+                                        @endforeach
+                                        @endif
+                                    </div>
+
+                                    {{-- 
+                                    @if($news->thumbnail)
+                                    @if(file_exists(public_path($news->thumbnail)))
+                                    <div>
+                                        <img src="{{ $news->thumbnail }}">
+                                    </div>
+                                    @endif
+                                    @endif
+                                    <input type="file"  name="picture[]" id="picture" multiple> --}}
+                                </div>
+                            </div>
+
 
                             <div class="row">
                                 <div class="col-md-12 text-center" style="margin-top: 20px;">

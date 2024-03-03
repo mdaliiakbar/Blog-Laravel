@@ -5,11 +5,17 @@
     <script src="assets/libs/parsleyjs/parsley.min.js"></script>
 
     <!-- validation init -->
-    <script src="assets/js/pages/form-validation.init.js"></script>
+    <script src="assets/js/pages/form-validation.init.js"></script>   
+    <script src="{{ asset('assets/js/pages/spartan-multi-image-picker.js')}}"></script>
     <script>
-          var id;
+         var count = 0;
+          
         $(document).ready(function(){
-
+            $("#demo").spartanMultiImagePicker({
+                fieldName:  'picture[]',
+                //dropFileLabel:   'Drop file here',
+                allowedExt:'png|jpg|jpeg|gif|webp'
+            });
 
         });
     </script>
@@ -81,14 +87,7 @@
                                     <textarea name="body" parsley-trigger="change" class="form-control" id="body" required></textarea>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="picture">Picture <span class="text-danger">*</span></label>
-                                    <input type="file"  name="picture[]" id="picture">
-                                </div>
-                            </div>
-
+                        
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Tags </label>
@@ -116,6 +115,13 @@
                                 <div class="col-md-12">
                                     <label for="meta">Meta</label>
                                     <textarea name="meta" class="form-control" id="meta"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="picture">Picture <span class="text-danger">*</span></label>
+                                    <div id="demo" class="row"></div>
                                 </div>
                             </div>
 

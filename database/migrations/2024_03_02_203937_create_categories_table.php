@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('title');
             $table->string('slug')->nullable();
             $table->text('details')->nullable();
+            $table->text('meta')->nullable();
             $table->tinyInteger('status')->default(1)->nullable()->comment("1=active,2=inactive");
             $table->bigInteger('created_by')->nullable();
             $table->timestamps();

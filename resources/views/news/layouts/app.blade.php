@@ -13,10 +13,10 @@
     <link rel="icon" href="demo-landing/img/favicon.png">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="news/css/vendor.css">
-    <link rel="stylesheet" href="news/css/magnific-popup.css">
-    <link rel="stylesheet" href="news/css/style.css">
-    <link rel="stylesheet" href="news/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('news/css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('news/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('news/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('news/css/responsive.css') }}">
 
 </head>
 <body>
@@ -131,9 +131,9 @@
 
 
     <!-- all plugins here -->
-    <script src="news/js/vendor.js"></script>
-    <script src="news/js/jquery.magnific-popup.min.js"></script>
+    <script src="{{ asset('news/js/vendor.js') }}"></script>
+    <script src="{{ asset('news/js/jquery.magnific-popup.min.js') }}"></script>
     <!-- main js  -->
-    <script src="news/js/main.js"></script>
+    <script src="{{ asset('news/js/main.js') }}"></script>
 </body>
 </html>

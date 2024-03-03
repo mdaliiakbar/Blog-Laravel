@@ -167,6 +167,11 @@ class NewsController extends Controller
                 "thumbnail"=> implode(",",$thumbnail)
             ]);
         } else {
+
+           $imageNewAdd = $request->imageNewAdd;
+
+           
+
             $news = News::find($request->id);
             $news->title = $request->title;
             $news->body = $request->body;
@@ -177,21 +182,41 @@ class NewsController extends Controller
             $news->news_status = $request->news_status;
             $news->tag_id = $request->tag ? implode(",",$request->tag):'';
             $news->updated_by = auth()->user()->id;
-            if($picture){
-                if($news->picture){
-                    foreach (explode(',',$news->picture) as $file) {
-                        if(file_exists(public_path($file))){
-                            unlink(public_path($file));
-                        }
+
+            if($request->trashImg){
+
+                if(!$picture){
+                    $oldPicture=$oldThumbnail=[];
+                }
+
+                foreach (explode(',',$request->trashImg) as $file) {
+                    if($file and $picture){
+                        // $picture=array_filter($picture, $file);
+                        $picture= array_values(array_diff($oldPicture,array($file)));
                     }
-                    foreach (explode(',',$news->thumbnail) as $file) {
-                        if(file_exists(public_path($file))){
-                            unlink(public_path($file));
-                        }
+                    if(file_exists(public_path($file))){                       
+                        unlink(public_path($file));
                     }
                 }
-                $news->picture = implode(",",$picture);
-                $news->thumbnail = implode(",",$thumbnail);
+                foreach (explode(',',$request->trashThum) as $file) {
+                    if($file and $thumbnail){
+                        $thumbnail=array_values(array_diff($oldThumbnail,array($file)));
+                    }                  
+                    if(file_exists(public_path($file))){
+                        unlink(public_path($file));
+                    }
+                }
+            }
+            if($picture){
+                if($imageNewAdd>0){
+                    if($news->picture){
+                        $picture = array_merge(explode(",",$news->picture),$picture) ;
+                        $thumbnail = array_merge(explode(",",$news->thumbnail),$thumbnail) ;
+                    }
+                    $news->picture = implode(",",$picture);
+                    $news->thumbnail = implode(",",$thumbnail);
+                }
+                
             }
             $news->save();
         }
