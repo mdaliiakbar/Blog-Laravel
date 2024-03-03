@@ -24,6 +24,7 @@ class CreateNewsTable extends Migration
             $table->tinyInteger('news_type')->nullable();
             $table->date('news_date')->nullable();
             $table->tinyInteger('news_status')->nullable()->default(2)->comment("1=publish,2=draft");
+            $table->text('slug')->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
             $table->timestamps();

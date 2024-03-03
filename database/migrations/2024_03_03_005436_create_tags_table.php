@@ -16,6 +16,7 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug')->nullable();
             $table->tinyInteger('status')->default(1)->nullable()->comment("1=active,2=inactive");
             $table->bigInteger('created_by')->nullable();
             $table->timestamps();
