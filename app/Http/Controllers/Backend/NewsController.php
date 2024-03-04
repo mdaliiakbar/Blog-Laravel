@@ -97,10 +97,10 @@ class NewsController extends Controller
                 $nestedData[] =
                     '<form style="display:inline;" action="'.(route("news-del")).'" method="post" onsubmit="return confirm_delete()">
                         <div class="btn-group align-middle">
-                        <a href="' . route("news-edit",$post->id).  '" class="btn btn-primary btn-sm badge">
-                    <span class="ft-edit"></span> Edit</a>
-                    '.(csrf_field()).' <input type="hidden" name="id" value="'.($post->id).'">
-                    <button class="deleteData btn btn-danger btn-sm badge"><span class="ft-delete"></span> Delete</button></div></form>';
+                        <a href="' . route("post",[$post->category->slug,$post->slug]) . '" target="_blank" title="Browse" data-toggle="tooltip" data-placement="top" class="btn btn-info btn-sm info"><span class="fa fa-globe" ></span></a>
+                        <a href="' . route("news-edit",$post->id) .  '" title="Update" data-toggle="tooltip" data-placement="top" class="btn btn-primary btn-sm badge"><span class="fa fa-edit" ></span></a>
+                    '.(csrf_field()).' <input type="hidden" name="id" value="'. ($post->id) .'">
+                    <button class="deleteData btn btn-danger btn-sm badge" title="Trash" data-toggle="tooltip" data-placement="top"><span class="fa fa-trash"></span></button></div></form>';
                 $data[] = $nestedData;
             }
         }

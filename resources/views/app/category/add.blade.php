@@ -2,10 +2,10 @@
 @section('title','Add Category')
 
 @section("script")
-    <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+<script src="{{ asset('assets/libs/parsleyjs/parsley.min.js') }}"></script>
 
-    <!-- validation init -->
-    <script src="assets/js/pages/form-validation.init.js"></script>
+<!-- validation init -->
+<script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script>
           var id;
         $(document).ready(function(){

@@ -1,29 +1,25 @@
 @extends('layouts.app')
 @section('title','Trash')
 @section("style")
-
-
-	<link href="assets/libs/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-	<link href="assets/libs/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section("script")
+<script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-	<script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
-	<script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+	
+	$(document).ready(function(){
 
-	<script>
-		
-		$(document).ready(function(){
+	});
 
-		});
-
-		function confirm_delete(){
-			if(confirm("Are you sure to delete forever?")){
-				return true;
-			} return false;
-		}
-	</script>
+	function confirmation(text){
+		if(confirm(text)){
+			return true;
+		} return false;
+	}
+</script>
 
 @endsection
 @section('content')
@@ -63,14 +59,15 @@
 						<table id="studentList" class="table table-bordered dt-responsive nowrap">
 							<thead>
 							<tr>
-								<th class="text-center">#</th>
-								<th>Title</th>
-								<th class="text-center">Post At</th>
-								<th class="text-center">Delete At</th>
-								<th class="text-center">Action</th>
+								<th style="width: 5%" class="text-center">#</th>
+								<th style="width: 50%">Title</th>
+								<th style="width: 15%" class="text-center">Post At</th>
+								<th style="width: 15%" class="text-center">Delete At</th>
+								<th style="width: 10%" class="text-center">Action</th>
 							</tr>
 							</thead>
 							<tbody>
+								@if(count($news)>0)
 								@foreach ($news as $key=>$item)
 								<tr>
 									<td class="text-center">{{ $key+1 }} </td>
@@ -81,17 +78,22 @@
 									<td class="text-center">{{ $item->news_date }} </td>
 									<td class="text-center">{{ $item->deleted_at }} </td>
 									<td class="text-center"> 
-										<form style="display:inline;" action="{{ route("news-del-forever") }}" method="post" onsubmit="return confirm_delete()">
+										<form style="display:inline;" action="{{ route("news-del-forever") }}" method="post" onsubmit="return confirmation('Are you sure to delete forever?')">
 											{{ csrf_field() }}
 											<input type="hidden" name="id" value="{{ $item->id }}">
 											<div class="btn-group">
-												<a href="{{ route("news-restore",$item->id) }}" class="fa fa-retweet btn btn-sm btn-primary"> Restore</a> 
-												<button type="submit" class="fa fa-trash btn btn-sm btn-danger"> Delete</button> 
+												<a title="Restore" data-toggle="tooltip" data-placement="top" href="{{ route("news-restore",$item->id) }}" class="fa fa-retweet btn btn-sm btn-primary"  onclick="return confirmation('Are you sure to restore?')"></a> 
+												<button title="Delete Forever" data-toggle="tooltip" data-placement="top" type="submit" class="fa fa-trash btn btn-sm btn-danger"></button> 
 											</div>
 										</form>
 									</td>
 								</tr>
 								@endforeach
+								@else
+								<tr>
+									<td class="text-center" colspan="5">No data found!</td>
+								</tr>
+								@endif
 								
 							</tbody>
 						</table>

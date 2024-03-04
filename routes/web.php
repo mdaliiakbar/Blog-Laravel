@@ -7,6 +7,8 @@ Route::post('/login', "App\\Http\\Controllers\\Auth\\LoginController@authenticat
 
 
 Route::get('/', "App\\Http\\Controllers\\News\\HomeController@index")->name('home');
+Route::get('post/{cat}/{news}', "App\\Http\\Controllers\\News\\HomeController@newsPost")->name("post");
+Route::get('category/{cat}', "App\\Http\\Controllers\\News\\HomeController@newsCategory")->name("category");
 
 
 
@@ -26,17 +28,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/news-restore/{id}', "App\\Http\\Controllers\\Backend\\NewsController@restoreNews")->name("news-restore");
     Route::post('/news-del-forever', "App\\Http\\Controllers\\Backend\\NewsController@deleteNewsForever")->name("news-del-forever");
 
-    Route::get('/category', "App\\Http\\Controllers\\Backend\\CategoryController@index")->name("category");
-    Route::get('/category/add', "App\\Http\\Controllers\\Backend\\CategoryController@add")->name("add-category");
-    Route::post('/category/add', "App\\Http\\Controllers\\Backend\\CategoryController@save")->name("add-category");
-    Route::post('/category/list', "App\\Http\\Controllers\\Backend\\CategoryController@category")->name("category_list");
-    Route::get('/category/edit/{id}', "App\\Http\\Controllers\\Backend\\CategoryController@edit")->name("category-edit");
+    Route::get('/admin/category', "App\\Http\\Controllers\\Backend\\CategoryController@index")->name("category");
+    Route::get('/admin/category/add', "App\\Http\\Controllers\\Backend\\CategoryController@add")->name("add-category");
+    Route::post('/admin/category/add', "App\\Http\\Controllers\\Backend\\CategoryController@save")->name("add-category");
+    Route::post('/admin/category/list', "App\\Http\\Controllers\\Backend\\CategoryController@category")->name("category_list");
+    Route::get('/admin/category/edit/{id}', "App\\Http\\Controllers\\Backend\\CategoryController@edit")->name("category-edit");
 
-    Route::get('/tags', "App\\Http\\Controllers\\Backend\\TagController@index")->name("tags");
-    Route::get('/tags/add', "App\\Http\\Controllers\\Backend\\TagController@add")->name("add-tag");
-    Route::post('/tags/add', "App\\Http\\Controllers\\Backend\\TagController@save")->name("add-tag");
-    Route::post('/tags/list', "App\\Http\\Controllers\\Backend\\TagController@tags")->name("tag_list");
-    Route::get('/tags/edit/{id}', "App\\Http\\Controllers\\Backend\\TagController@edit")->name("tag-edit");
+    Route::get('/admin/tags', "App\\Http\\Controllers\\Backend\\TagController@index")->name("tags");
+    Route::get('/admin/tags/add', "App\\Http\\Controllers\\Backend\\TagController@add")->name("add-tag");
+    Route::post('/admin/tags/add', "App\\Http\\Controllers\\Backend\\TagController@save")->name("add-tag");
+    Route::post('/admin/tags/list', "App\\Http\\Controllers\\Backend\\TagController@tags")->name("tag_list");
+    Route::get('/admin/tags/edit/{id}', "App\\Http\\Controllers\\Backend\\TagController@edit")->name("tag-edit");
 
     Route::get('/change-password', "App\\Http\\Controllers\\Auth\\LoginController@showChangePasswordForm")->name("change-password");
     Route::post('/change-password', "App\\Http\\Controllers\\Auth\\LoginController@changePassword")->name("change-password");

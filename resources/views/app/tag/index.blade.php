@@ -1,17 +1,12 @@
 @extends('layouts.app')
 @section('title','Tags')
 @section("style")
-
-
-	<link href="assets/libs/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-	<link href="assets/libs/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-
+	<link href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section("script")
-
-	<script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
-	<script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
-
+	<script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
 	<script>
 		var table;
 		$(document).ready(function(){

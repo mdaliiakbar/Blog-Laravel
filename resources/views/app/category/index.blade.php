@@ -1,77 +1,72 @@
 @extends('layouts.app')
 @section('title','Category')
 @section("style")
-
-
-	<link href="assets/libs/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-	<link href="assets/libs/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section("script")
-
-	<script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
-	<script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
-
-	<script>
-		var table;
-		$(document).ready(function(){
-			studentList();
+<script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script>
+	var table;
+	$(document).ready(function(){
+		studentList();
 
 
-		});
+	});
 
-		function confirm_delete(){
-			if(confirm("Are you sure to delete this?")){
-				return true;
-			} return false;
-		}
+	function confirm_delete(){
+		if(confirm("Are you sure to delete this?")){
+			return true;
+		} return false;
+	}
 
-		function studentList(){
-			var filterData  = {
-				filter_status   : $("#filter_status").val(),
-				filter_type   	: $("#filter_type").val()
-			};
+	function studentList(){
+		var filterData  = {
+			filter_status   : $("#filter_status").val(),
+			filter_type   	: $("#filter_type").val()
+		};
 
-			table = $('#studentList').DataTable
-			({
-				"bAutoWidth": false,
-				"destroy": true,
-				"bProcessing": true,
-				"serverSide": true,
-				"responsive": false,
-				"aaSorting": [[0, 'desc']],
-				"scrollX": true,
-				"scrollCollapse": true,
-				"columnDefs": [
-					{
-						"targets": [2,3,4],
-						"orderable": false
-					}, {
-						"targets": [0,2, 3,4],
-						className: "text-center"
-					}],
-				"ajax": {
-					url: "{{ route('category_list') }}",
-					type: "post",
-					"data": {
-						_token: "{{ csrf_token() }}",
-						search: filterData
-					},
-					"aoColumnDefs": [{
-						'bSortable': false
-					}],
+		table = $('#studentList').DataTable
+		({
+			"bAutoWidth": false,
+			"destroy": true,
+			"bProcessing": true,
+			"serverSide": true,
+			"responsive": false,
+			"aaSorting": [[0, 'desc']],
+			"scrollX": true,
+			"scrollCollapse": true,
+			"columnDefs": [
+				{
+					"targets": [2,3,4],
+					"orderable": false
+				}, {
+					"targets": [0,2, 3,4],
+					className: "text-center"
+				}],
+			"ajax": {
+				url: "{{ route('category_list') }}",
+				type: "post",
+				"data": {
+					_token: "{{ csrf_token() }}",
+					search: filterData
+				},
+				"aoColumnDefs": [{
+					'bSortable': false
+				}],
 
-					"dataSrc": function (jsonData) {
-						return jsonData.data;
-					},
-					error: function (request, status, error) {
-						console.log(request.responseText);
-						//toastr.warning('Server Error. Try aging!', 'Warning');
-					}
+				"dataSrc": function (jsonData) {
+					return jsonData.data;
+				},
+				error: function (request, status, error) {
+					console.log(request.responseText);
+					//toastr.warning('Server Error. Try aging!', 'Warning');
 				}
-			});
-		}
-	</script>
+			}
+		});
+	}
+</script>
 
 @endsection
 @section('content')

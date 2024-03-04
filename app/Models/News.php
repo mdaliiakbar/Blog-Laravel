@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class News extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $guarded = [];
 
+    protected $guarded = [];
+    
     public  function category(){
         return $this->belongsTo(Categories::class);
     }

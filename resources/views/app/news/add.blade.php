@@ -2,10 +2,10 @@
 @section('title','Add News & Events')
 
 @section("script")
-    <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+    <script src="{{ asset ('assets/libs/parsleyjs/parsley.min.js') }}"></script>
 
     <!-- validation init -->
-    <script src="assets/js/pages/form-validation.init.js"></script>   
+    <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>   
     <script src="{{ asset('assets/js/pages/spartan-multi-image-picker.js')}}"></script>
     <script>
          var count = 0;

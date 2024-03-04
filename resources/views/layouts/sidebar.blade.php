@@ -49,7 +49,7 @@
                             </li>
                             <li>
                                 <a href="javascript: void(0);">
-                                    <i class="dripicons-user"></i>
+                                    <i class="dripicons-blog"></i>
                                     <span> Blog Manger </span>
                                     <span class="menu-arrow"></span>
                                 </a>
