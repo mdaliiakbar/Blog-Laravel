@@ -47,7 +47,7 @@ class NewsController extends Controller
         if($filter_category){
             $where = array_merge($where,["category_id"=>$filter_category]);
         }
-        $totalData = News::query()->where($where)->count();
+        $totalData = News::query()->where($where)->whereNull('deleted_at')->count();
 
         $totalFiltered = $totalData;
 
@@ -69,7 +69,7 @@ class NewsController extends Controller
         } else {
             $search = $request->input('search.value');
 
-            $posts = News::query()->where('title', '=', "{$search}");
+            $posts = News::query()->where('title', '=', "{$search}")->whereNull('deleted_at');
 
             if($where){
                 $posts = $posts->where($where);
@@ -168,9 +168,7 @@ class NewsController extends Controller
             ]);
         } else {
 
-           $imageNewAdd = $request->imageNewAdd;
-
-           
+            $imageNewAdd = $request->imageNewAdd;           
 
             $news = News::find($request->id);
             $news->title = $request->title;
@@ -183,41 +181,42 @@ class NewsController extends Controller
             $news->tag_id = $request->tag ? implode(",",$request->tag):'';
             $news->updated_by = auth()->user()->id;
 
-            if($request->trashImg){
-
-                if(!$picture){
-                    $oldPicture=$oldThumbnail=[];
-                }
+            if($request->trashImg && empty($picture)){
+                
+                $picture=explode(',',$news->picture);
+                $thumbnail=explode(',',$news->thumbnail);
 
                 foreach (explode(',',$request->trashImg) as $file) {
-                    if($file and $picture){
-                        // $picture=array_filter($picture, $file);
-                        $picture= array_values(array_diff($oldPicture,array($file)));
+                    if($file && $picture){
+                        $picture= array_values(array_diff($picture,array($file)));
                     }
                     if(file_exists(public_path($file))){                       
                         unlink(public_path($file));
                     }
                 }
                 foreach (explode(',',$request->trashThum) as $file) {
-                    if($file and $thumbnail){
-                        $thumbnail=array_values(array_diff($oldThumbnail,array($file)));
+                    if($file && $thumbnail){
+                        $thumbnail=array_values(array_diff($thumbnail,array($file)));
                     }                  
                     if(file_exists(public_path($file))){
                         unlink(public_path($file));
                     }
                 }
             }
-            if($picture){
-                if($imageNewAdd>0){
-                    if($news->picture){
-                        $picture = array_merge(explode(",",$news->picture),$picture) ;
-                        $thumbnail = array_merge(explode(",",$news->thumbnail),$thumbnail) ;
-                    }
-                    $news->picture = implode(",",$picture);
-                    $news->thumbnail = implode(",",$thumbnail);
-                }
-                
+
+            if($picture && empty($request->trashImg)){                
+                if($news->picture){
+                    $picture = array_merge(explode(",",$news->picture),$picture) ;
+                    $thumbnail = array_merge(explode(",",$news->thumbnail),$thumbnail) ;
+                } 
             }
+
+         
+            $news->picture = implode(",",$picture);
+            $news->thumbnail = implode(",",$thumbnail);
+        
+           
+            
             $news->save();
         }
 
@@ -237,6 +236,60 @@ class NewsController extends Controller
     }
 
     public function delete(Request $request)
+    {
+        $news = News::find($request->id);
+        $news->deleted_by=auth()->user()->id;
+        if($news){
+            if($news->delete()){
+                return back()->with(["msg"=>"Successfully sent to trash."]);
+            }else{
+                return back()->withErrors(["msg"=>"Failed to trash! Please try again."]);
+            }
+        }else{
+            return back()->withErrors(["msg"=>"Failed to trash! Please try again."]);
+        }
+    }
+
+    public function trashNews()
+    {
+        $news = News::onlyTrashed()->get();
+        return view("app.news.trash", compact('news'));
+    }
+
+    public function restoreNews($id)
+    {
+        $news = News::withTrashed()->find($id);
+        if($news){
+            if($news->restore()){
+                return back()->with(["msg"=>"Successfully restored."]);
+            } else{
+                return back()->withErrors(["msg"=>"Failed to restore! Please try again."]);
+            }
+        }else{
+            return back()->withErrors(["msg"=>"Failed to restore! Please try again."]);
+        }
+    }
+
+    public function deleteNewsForever(Request $request )
+    {
+        //$news = News::find($id);
+
+        $news = News::withTrashed()->find($request->id);
+        if($news){
+            if($news->forceDelete()){
+                return back()->with(["msg"=>"Parmenently deleted."]);
+            } 
+            else{
+                return back()->withErrors(["msg"=>"Failed to delete! Please try again."]);
+            }
+        }
+        else{
+            return back()->withErrors(["msg"=>"Failed to delete! Please try again."]);
+        }
+       
+    }
+
+    public function delete2(Request $request)
     {
         $news = News::find($request->id);
         if($news){

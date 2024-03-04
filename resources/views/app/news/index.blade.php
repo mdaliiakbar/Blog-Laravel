@@ -21,7 +21,7 @@
 		});
 
 		function confirm_delete(){
-			if(confirm("Are you sure to delete this?")){
+			if(confirm("Are you sure to sent trash this?")){
 				return true;
 			} return false;
 		}
@@ -141,10 +141,6 @@
 										<option value="2">Events</option>
 									</select>
 								</div>
-
-
-
-
 							</div>
 						</form>
 					</div> <!-- end card-box -->

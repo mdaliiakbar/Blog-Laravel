@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/news_list', "App\\Http\\Controllers\\Backend\\NewsController@news")->name("news_list");
     Route::get('/news-edit/{id}', "App\\Http\\Controllers\\Backend\\NewsController@edit")->name("news-edit");
     Route::post('/news-del', "App\\Http\\Controllers\\Backend\\NewsController@delete")->name("news-del");
+    Route::get('/news-trash', "App\\Http\\Controllers\\Backend\\NewsController@trashNews")->name("news-trash");
+    Route::get('/news-restore/{id}', "App\\Http\\Controllers\\Backend\\NewsController@restoreNews")->name("news-restore");
+    Route::post('/news-del-forever', "App\\Http\\Controllers\\Backend\\NewsController@deleteNewsForever")->name("news-del-forever");
 
     Route::get('/category', "App\\Http\\Controllers\\Backend\\CategoryController@index")->name("category");
     Route::get('/category/add', "App\\Http\\Controllers\\Backend\\CategoryController@add")->name("add-category");

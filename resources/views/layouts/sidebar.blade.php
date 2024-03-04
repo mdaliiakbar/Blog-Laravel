@@ -50,15 +50,18 @@
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="dripicons-user"></i>
-                                    <span> News & Events </span>
+                                    <span> Blog Manger </span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
-                                        <a href="{{ route("add-news") }}">Add New</a>
+                                        <a href="{{ route("add-news") }}">New</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('news') }}">News & Event List</a>
+                                        <a href="{{ route('news') }}">Blogs</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('news-trash') }}">Trash</a>
                                     </li>
                                 </ul>
                             </li>

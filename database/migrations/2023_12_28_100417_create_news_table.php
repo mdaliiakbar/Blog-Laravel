@@ -19,8 +19,8 @@ class CreateNewsTable extends Migration
             $table->string('tag_id',20)->nullable();
             $table->string('title');
             $table->text('body');
-            $table->json('picture')->nullable();
-            $table->json('thumbnail')->nullable();
+            $table->json('picture')->nullable()->collation('utf8mb4_unicode_ci') ;
+            $table->json('thumbnail')->nullable()->collation('utf8mb4_unicode_ci');
             $table->tinyInteger('news_type')->nullable();
             $table->date('news_date')->nullable();
             $table->tinyInteger('news_status')->nullable()->default(2)->comment("1=publish,2=draft");
@@ -28,7 +28,9 @@ class CreateNewsTable extends Migration
             $table->text('meta')->nullable();
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
+            $table->bigInteger('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
