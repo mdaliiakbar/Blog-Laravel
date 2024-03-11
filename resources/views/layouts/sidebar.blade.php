@@ -9,8 +9,15 @@
                         <ul class="metismenu" id="side-menu">
 
                             <li>
+                                <a href="{{ route("home") }}" target="_blank">
+                                    <i class="dripicons-web"></i>
+                                    <span> Visit Website </span>
+                                </a>
+                            </li>
+
+                            <li>
                                 <a href="{{ route("dashboard") }}">
-                                    <i class="dripicons-meter"></i>
+                                    <i class="dripicons-device-desktop"></i>
                                     <span> Dashboard </span>
                                 </a>
                             </li>
@@ -47,6 +54,22 @@
                                     </li>
                                 </ul>
                             </li>
+                            
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="dripicons-list"></i>
+                                    <span> Breaking News </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="{{ route("add-tag") }}">Running News</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('tags') }}">Archive</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="dripicons-blog"></i>
@@ -58,12 +81,19 @@
                                         <a href="{{ route("add-news") }}">New</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('news') }}">Blogs</a>
+                                        <a href="{{ route('news') }}">All Blogs</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('news-trash') }}">Trash</a>
+                                        <a href="{{ route('news-trash') }}">Trash Box</a>
                                     </li>
                                 </ul>
+                            </li>
+
+                            <li>
+                                <a href="{{ route("dashboard") }}">
+                                    <i class="dripicons-gear"></i>
+                                    <span> Home Page Setting</span>
+                                </a>
                             </li>
                         </ul>
 
