@@ -13,7 +13,7 @@
 </ul>
 <hr>
 
-<a href="blog.shikkhaghorbd.com" target="_blank">Live Demo</a>
+<a href="//blog.shikkhaghorbd.com" target="_blank">Live Demo</a>
 <hr>
 
 <p>Contact Info:</p>
